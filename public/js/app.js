@@ -160,30 +160,7 @@ var render = function render() {
         return _vm.handleClickStart.apply(null, arguments);
       }
     }
-  }, [_vm._v("Start")])] : _vm._e(), _vm._v(" "), _vm.players[0].hand.length ? [_vm.message ? [_c("h3", {
-    domProps: {
-      textContent: _vm._s(_vm.message)
-    }
-  }), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-primary",
-    on: {
-      click: function click($event) {
-        $event.stopPropagation();
-        return _vm.handClickDealAgain.apply(null, arguments);
-      }
-    }
-  }, [_vm._v("Deal Again")])] : _c("button", {
-    staticClass: "btn btn-primary",
-    staticStyle: {
-      width: "100%"
-    },
-    on: {
-      click: function click($event) {
-        $event.stopPropagation();
-        return _vm.handleGetWinner.apply(null, arguments);
-      }
-    }
-  }, [_vm._v("Who wins?")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Start")])] : _vm._e(), _vm._v(" "), _vm.players[0].hand.length ? [_c("div", {
     staticClass: "container"
   }, _vm._l(_vm.players, function (player, pid) {
     return _c("article", {
@@ -205,7 +182,33 @@ var render = function render() {
         }
       })])]);
     }), 0)]);
-  }), 0)] : _vm._e()], 2);
+  }), 0), _vm._v(" "), _vm.message ? [_c("h3", {
+    domProps: {
+      textContent: _vm._s(_vm.message)
+    }
+  }), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-primary",
+    staticStyle: {
+      width: "100%"
+    },
+    on: {
+      click: function click($event) {
+        $event.stopPropagation();
+        return _vm.handClickDealAgain.apply(null, arguments);
+      }
+    }
+  }, [_vm._v("Deal Again")])] : _c("button", {
+    staticClass: "btn btn-primary",
+    staticStyle: {
+      width: "100%"
+    },
+    on: {
+      click: function click($event) {
+        $event.stopPropagation();
+        return _vm.handleGetWinner.apply(null, arguments);
+      }
+    }
+  }, [_vm._v("Who wins?")])] : _vm._e()], 2);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -374,7 +377,6 @@ var helpers = {
   getCardMatches: function getCardMatches(cardsArr, index) {
     var cardValue = cardsArr.splice(0, 1)[0],
       matches = [cardValue]; //first item is always a match
-
     cardsArr.forEach(function (card) {
       //console.log(card, cardValue);
       if (card[index] === cardValue[index]) {
@@ -702,7 +704,6 @@ var HandChecks = /*#__PURE__*/function () {
   }, {
     key: "singlePair",
     value: function singlePair() {
-      console.log('singlePair check');
       var pairs = _pokerHandHelpers__WEBPACK_IMPORTED_MODULE_0__.helpers.pairsCheck(_toConsumableArray(this.playersCards));
       if (pairs.length === 2) {
         return this.rank = {
@@ -716,7 +717,6 @@ var HandChecks = /*#__PURE__*/function () {
   }, {
     key: "twoPair",
     value: function twoPair() {
-      console.log('twoPair check');
       var pairs = _pokerHandHelpers__WEBPACK_IMPORTED_MODULE_0__.helpers.pairsCheck(_toConsumableArray(this.playersCards));
       if (pairs.length === 4) {
         return this.rank = {
@@ -766,7 +766,7 @@ var HandChecks = /*#__PURE__*/function () {
       var cards = _toConsumableArray(this.playersCards),
         heirarchyOfCards = [],
         itemsSorted = _pokerHandHelpers__WEBPACK_IMPORTED_MODULE_0__.helpers.sortCardsByValues(cards),
-        //order the cards 
+        //order the cards
         firstSortedItem = itemsSorted[0],
         firstSortedItemValue = firstSortedItem.value;
       for (var i = 2; i <= 14; i++) {
@@ -825,10 +825,11 @@ var HandChecks = /*#__PURE__*/function () {
     value: function bookCheck() {
       var hasTrips = this.tripsCheck();
       if (hasTrips) {
-        var tripsValue = hasTrips.highCard.value; //remove items in the hand which match the trips value
-        var filteredTripsOut = _toConsumableArray(this.playersCards).filter(function (card) {
-          return parseInt(card.slice(1)) !== tripsValue;
-        });
+        var tripsValue = hasTrips.highCard.card.slice(1),
+          //remove items in the hand which match the trips value
+          filteredTripsOut = _toConsumableArray(this.playersCards).filter(function (card) {
+            return card.slice(1) !== tripsValue;
+          });
         if (filteredTripsOut[0][1] === filteredTripsOut[1][1]) {
           // check the remaining cards are matching
           return this.rank = {
@@ -1128,10 +1129,11 @@ vue__WEBPACK_IMPORTED_MODULE_2__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_3_
   state: {
     deck: _toConsumableArray(_service_PokerHands__WEBPACK_IMPORTED_MODULE_0__.deckOfCards),
     players: [
-      // {"id":123321,"name":"white","hand":["SA","C4","D10","C8","S10"]},
-      // {"id":987789,"name":"black","hand":["S4","H7","C10","H10","H5"]},
-      // {"id":678876,"name":"red","hand":["C2","D5","S6","H9","C9"]},
-      // {"id":23821,"name":"Foo barr","hand":["CJ","CA","C9","C6","D4"]}
+      // Bug with Full house FIXED NOW
+      // {"id":123321,"name":"white","hand":["D6","C8","D4","C4","D8"]},
+      // {"id":987789,"name":"black","hand":["D3","H4","DA","C7","HJ"]},
+      // {"id":678876,"name":"red","hand":["HK","CK","C2","S4","DK"]},
+      // {"id":3867,"name":"Testies","hand":["DJ","S6","C5","CJ","D2"]}
     ],
     message: null
   },
@@ -1200,6 +1202,7 @@ vue__WEBPACK_IMPORTED_MODULE_2__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_3_
     addPlayers: function addPlayers(_ref6, _ref7) {
       var commit = _ref6.commit;
       var players = _ref7.players;
+      // Re-instate this after adding the feature for the user to add apponents (up to 5)
       // let players = playersItems.players;
       // players.push({
       //     id: 123,

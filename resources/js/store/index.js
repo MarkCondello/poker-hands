@@ -9,10 +9,11 @@ export default new Vuex.Store({
     state: {
         deck: [...deckOfCards],
         players: [
-            // {"id":123321,"name":"white","hand":["SA","C4","D10","C8","S10"]},
-            // {"id":987789,"name":"black","hand":["S4","H7","C10","H10","H5"]},
-            // {"id":678876,"name":"red","hand":["C2","D5","S6","H9","C9"]},
-            // {"id":23821,"name":"Foo barr","hand":["CJ","CA","C9","C6","D4"]}
+            // Bug with Full house FIXED NOW
+            // {"id":123321,"name":"white","hand":["D6","C8","D4","C4","D8"]},
+            // {"id":987789,"name":"black","hand":["D3","H4","DA","C7","HJ"]},
+            // {"id":678876,"name":"red","hand":["HK","CK","C2","S4","DK"]},
+            // {"id":3867,"name":"Testies","hand":["DJ","S6","C5","CJ","D2"]}
         ],
         message: null,
     },
@@ -68,6 +69,7 @@ export default new Vuex.Store({
             commit("SET_MESSAGE");
         },
         addPlayers({commit}, {players}){
+            // Re-instate this after adding the feature for the user to add apponents (up to 5)
             // let players = playersItems.players;
             // players.push({
             //     id: 123,

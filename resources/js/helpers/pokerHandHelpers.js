@@ -4,7 +4,6 @@ export let helpers = {
         let highestNonPairKickerHand = orderedCards[0].handValue.nonPairs[pairIndex].value;
         return [...orderedCards].filter(hand => highestNonPairKickerHand === hand.handValue.nonPairs[pairIndex].value);
     },
-
     pairsCheck(cards){
         let pairs = cards.map(card => {
             let cardValue = card.slice(1)
@@ -86,7 +85,6 @@ export let helpers = {
     getCardMatches(cardsArr, index){
         let cardValue = cardsArr.splice(0, 1)[0],
         matches = [cardValue, ]; //first item is always a match
-
         cardsArr.forEach(card => {
             //console.log(card, cardValue);
             if(card[index] === cardValue[index]){

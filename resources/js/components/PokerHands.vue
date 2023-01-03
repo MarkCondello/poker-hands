@@ -7,15 +7,6 @@
             <button @click.stop="handleClickStart">Start</button>
         </template>
         <template v-if="players[0].hand.length">
-            <template v-if="message">
-                <h3 v-text="message"></h3>
-                <button @click.stop="handClickDealAgain" class="btn btn-primary">Deal Again</button>
-            </template>
-            <button
-                v-else style="width: 100%;"
-                @click.stop="handleGetWinner"
-                class="btn btn-primary"
-            >Who wins?</button>
             <div class="container">
                 <article v-for="(player, pid) in players" :key="pid">
                     <h2>{{player.name}}</h2>
@@ -38,6 +29,20 @@
                     </ul>
                 </article>
             </div>
+            <template v-if="message">
+                <h3 v-text="message"></h3>
+                <button
+                    @click.stop="handClickDealAgain"
+                    class="btn btn-primary"
+                    style="width: 100%;"
+                >Deal Again</button>
+            </template>
+            <button
+                v-else
+                style="width: 100%;"
+                @click.stop="handleGetWinner"
+                class="btn btn-primary"
+            >Who wins?</button>
         </template>
      </div>
 </template>
