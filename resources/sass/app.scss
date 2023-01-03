@@ -1,12 +1,6 @@
 @forward "./poker-hands.scss";
-
-// Bootstrap
- @forward '~bootstrap/scss/bootstrap';
-
+@forward "~bootstrap/scss/bootstrap";
 
 .flex {
     display: flex;
 }
-
-
- 
