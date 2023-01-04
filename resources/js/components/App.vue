@@ -1,48 +1,54 @@
 <template>
     <div class="poker-hands">
         <h1>POKER HANDS</h1>
-        <template v-if="showGameSettings">
+        <fieldset v-if="showGameSettings">
             <div class="field">
-                <label for="playersName">Add your name:</label>
-                <input type="text" v-model="playersName" name="playersName"/>
+                <label for="playersName">
+                    <span>Add your name:</span>
+                    <input
+                        name="playersName"
+                        type="text"
+                        v-model="playersName"
+                        @focus="clearErrors"
+                    />
+                </label>
+                <small v-if="invalidInput.playersName">Please include a name greater than 3 characters.</small>
             </div>
             <div class="field">
-                <label for="numberOfPlayers">Number of players:</label>
-                <input type="number" v-model="numberOfPlayers" name="numberOfPlayers"/>
+                <label for="numberOfPlayers">
+                    <span>Number of players:</span>
+                    <input
+                        min="1"
+                        max="5"
+                        name="numberOfPlayers"
+                        type="range"
+                        v-model="numberOfPlayers"
+                        @change="clearErrors"
+                    />
+                    <input
+                        readonly
+                        type="number"
+                        v-model="numberOfPlayers"
+                    />
+                </label>
+                <small v-if="invalidInput.numberOfPlayers">The number of players must be between 1 and 5.</small>
             </div>
-            <button @click.stop="handleClickStart">Start</button>
-        </template>
+            <button
+                @click.stop="handleClickStart"
+                class="btn btn-primary"
+                :disabled="invalidInput.playersName || invalidInput.playersName"
+            >Start</button>
+            <!-- <div>{{invalidInput}}</div> -->
+        </fieldset>
         <template v-if="players && !showGameSettings">
-            <!-- Convert to component -->
-            <div class="container">
-                <article v-for="(player, pid) in players" :key="pid">
-                    <h2>{{player.name}}</h2>
-                    <ul class="hand">
-                        <li
-                        v-for="(card, cid) in player.hand"
-                        :key="pid + cid"
-                        class="card"
-                        :style="`color:${cardColor(card[0])}`"
-                        >
-                            <div>
-                                <span>{{card.slice(1)}}</span>
-                                <span v-html="cardSuit(card[0])"></span>
-                            </div>
-                            <div>
-                                <span>{{card.slice(1)}}</span>
-                                <span v-html="cardSuit(card[0])"></span>
-                            </div>
-                        </li>
-                    </ul>
-                </article>
-            </div>
+            <PlayersCards />
             <template v-if="message">
-                <h3 v-text="message"></h3>
                 <button
                     @click.stop="handClickDealAgain"
                     class="btn btn-primary"
                     style="width: 100%;"
                 >Deal Again</button>
+                <h3 v-text="message"></h3>
             </template>
             <button
                 v-else
@@ -57,57 +63,38 @@
 <script>
 import { storeToRefs } from "pinia"
 import { usePokerHandsStore } from "../store/index"
+import PlayersCards from './PlayersCards.vue'
 export default {
     name: "Poker-Hands",
+    components: { PlayersCards },
     setup() {
         const pokerHands = usePokerHandsStore()
-        const { players, playersName, showGameSettings, numberOfPlayers, message } = storeToRefs(pokerHands)
-        const { dealCards, addPlayers, addSinglePlayer, winningHand, resetGame } = pokerHands
+        const { players, playersName, showGameSettings, numberOfPlayers, message, invalidInput, } = storeToRefs(pokerHands)
+        const { dealCards, addPlayers, addSinglePlayer, winningHand, resetGame, clearErrors, } = pokerHands
         return {
-            players, playersName, showGameSettings, numberOfPlayers, message,
-            dealCards, addPlayers, addSinglePlayer, winningHand, resetGame,
+            players, playersName, showGameSettings, numberOfPlayers, message, invalidInput,
+            dealCards, addPlayers, addSinglePlayer, winningHand, resetGame, clearErrors,
         }
     },
     methods: {
         async handleClickStart() {
-            // ToDo: Add store Validation for inputs
-
-            if (this.playersName.length > 3){
+            if (this.playersName.length < 3){
+                this.invalidInput.playersName = true
+            }
+            if (this.numberOfPlayers < 1 || this.numberOfPlayers > 5){
+                this.invalidInput.numberOfPlayers = true
+            }
+            if (!this.invalidInput.playersName && !this.invalidInput.playersName){
                 await this.addSinglePlayer()
                 await this.addPlayers()
                 this.showGameSettings = false
                 this.dealCards()
-            } else {
-                // Show userName error message
             }
         },
         async handClickDealAgain(){
             await this.resetGame();
             this.dealCards()
         },
-        // Move to component
-        cardSuit(suit){
-            switch(suit){
-                case('H'):
-                    return '&hearts;';
-                case('S'):
-                    return '&spades;';
-                case('D'):
-                    return '&diams;';
-                case('C'):
-                    return '&clubs;';
-            }
-        },
-        cardColor(suit){
-            switch(suit){
-                case('H'):
-                case('D'):
-                    return '#F00';
-                case('S'):
-                case('C'):
-                    return '#000;';
-            }
-        }
     },
 }
 </script>

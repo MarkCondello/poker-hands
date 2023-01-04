@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 import {deckOfCards, getHandValue, compareHighHands, animals, adjectives} from "../service/PokerHands"
 import textFormatting from "../helpers/textFormatting"
 
-
 export const usePokerHandsStore = defineStore('pokerHands', {
     state: () => ({
         deck: [...deckOfCards],
@@ -17,14 +16,17 @@ export const usePokerHandsStore = defineStore('pokerHands', {
             // {"id":3867,"name":"Testies","hand":["DJ","S6","C5","CJ","D2"]}
         ],
         message: null,
-        // ToDo: inputValidation
-        inputValidation: {
+        invalidInput: {
             playersName: false,
-            numberOfPlayers: true,
+            numberOfPlayers: false,
         },
     }),
     actions: {
-        resetGame(){
+        clearErrors() {
+            this.invalidInput.playersName = false
+            this.invalidInput.numberOfPlayers = false
+        },
+        resetGame() {
             this.deck = [...deckOfCards]
             this.players = this.players.map(player => {
                 player.hand = []
@@ -32,7 +34,7 @@ export const usePokerHandsStore = defineStore('pokerHands', {
             });
             this.message = null
         },
-        addPlayers(){
+        addPlayers() {
             for(let i = 0; i < this.numberOfPlayers; i++){
                 this.players.push(
                     {
@@ -43,7 +45,7 @@ export const usePokerHandsStore = defineStore('pokerHands', {
                 )
             }
         },
-        addSinglePlayer(){
+        addSinglePlayer() {
             const player = {
                 id: Math.floor(Math.random() * 100000),
                 name: this.playersName,
@@ -63,7 +65,7 @@ export const usePokerHandsStore = defineStore('pokerHands', {
                 i++
             }
         },
-        async winningHand(){
+        async winningHand() {
             this.players.forEach((player, arrayId)=>{
                 const rank = new getHandValue(player.hand).rank
                 this.players[arrayId].handValue = rank
