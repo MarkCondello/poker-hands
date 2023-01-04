@@ -1,12 +1,19 @@
 <template>
     <div class="poker-hands">
         <h1>POKER HANDS</h1>
-        <template v-if="players.length && showAddPlayer">
-            <label for="playersName">Add your name:</label>
-            <input type="text" v-model="playersName" name="playersName"/>
+        <template v-if="showGameSettings">
+            <div class="field">
+                <label for="playersName">Add your name:</label>
+                <input type="text" v-model="playersName" name="playersName"/>
+            </div>
+            <div class="field">
+                <label for="numberOfPlayers">Number of players:</label>
+                <input type="number" v-model="numberOfPlayers" name="numberOfPlayers"/>
+            </div>
             <button @click.stop="handleClickStart">Start</button>
         </template>
-        <template v-if="players[0].hand.length">
+        <template v-if="players && !showGameSettings">
+            <!-- Convert to component -->
             <div class="container">
                 <article v-for="(player, pid) in players" :key="pid">
                     <h2>{{player.name}}</h2>
@@ -40,7 +47,7 @@
             <button
                 v-else
                 style="width: 100%;"
-                @click.stop="handleGetWinner"
+                @click.stop="winningHand"
                 class="btn btn-primary"
             >Who wins?</button>
         </template>
@@ -48,45 +55,37 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "pinia"
+import { storeToRefs } from "pinia"
 import { usePokerHandsStore } from "../store/index"
-// import { mapState, mapActions } from "vuex";
 export default {
     name: "Poker-Hands",
-    props: {
-        playerItems: {
-            type: Array,
-            required: true,
-        }
-    },
-    data() {
+    setup() {
+        const pokerHands = usePokerHandsStore()
+        const { players, playersName, showGameSettings, numberOfPlayers, message } = storeToRefs(pokerHands)
+        const { dealCards, addPlayers, addSinglePlayer, winningHand, resetGame } = pokerHands
         return {
-            playersName: '',
-            showAddPlayer: true,
+            players, playersName, showGameSettings, numberOfPlayers, message,
+            dealCards, addPlayers, addSinglePlayer, winningHand, resetGame,
         }
-    },
-    created() {
-        this.addPlayers({players: this.playerItems})
-    },
-    computed: {
-        ...mapState(usePokerHandsStore, ['players', 'message']),
     },
     methods: {
-        ...mapActions(usePokerHandsStore, ['dealCards', 'addPlayers', 'addSinglePlayer', 'winningHand', 'resetGame']),
-        async handleClickStart(){
-             if(this.playersName.length > 3){
-                await this.addSinglePlayer(this.playersName)
-                this.showAddPlayer = false
+        async handleClickStart() {
+            // ToDo: Add store Validation for inputs
+
+            if (this.playersName.length > 3){
+                await this.addSinglePlayer()
+                await this.addPlayers()
+                this.showGameSettings = false
                 this.dealCards()
+            } else {
+                // Show userName error message
             }
         },
         async handClickDealAgain(){
             await this.resetGame();
             this.dealCards()
         },
-        handleGetWinner(){
-            this.winningHand()
-        },
+        // Move to component
         cardSuit(suit){
             switch(suit){
                 case('H'):
