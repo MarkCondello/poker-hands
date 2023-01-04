@@ -1,4 +1,4 @@
- - [x] Convert Vuex to Pinia
+ - [X] Convert Vuex to Pinia
  - [ ] Add options to add up to 5 opponents
  - [ ] Include betting feature for poker hands
   - [ ] user to select starting balance (up to 500,000) and the blinds value
