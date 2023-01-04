@@ -1,8 +1,7 @@
-let textFormatting = {
+export default {
     ucFirst(string){
-        let [first, ...rest] = string;
-        return `${first.toUpperCase()}${rest.join("")}`;
-    }
+        // console.log('ucFirst', string)
+        const [first, ...rest] = string
+        return `${first.toUpperCase()}${rest ? rest.join("") : ''}`
+    },
 }
-
-export default textFormatting;

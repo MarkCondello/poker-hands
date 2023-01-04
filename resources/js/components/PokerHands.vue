@@ -48,7 +48,9 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions } from "pinia"
+import { usePokerHandsStore } from "../store/index"
+// import { mapState, mapActions } from "vuex";
 export default {
     name: "Poker-Hands",
     props: {
@@ -67,23 +69,23 @@ export default {
         this.addPlayers({players: this.playerItems})
     },
     computed: {
-        ...mapState(['players', 'message']),
+        ...mapState(usePokerHandsStore, ['players', 'message']),
     },
     methods: {
-        ...mapActions(['dealCards', 'addPlayers', 'addSinglePlayer', 'winningHand', 'resetGame']),
+        ...mapActions(usePokerHandsStore, ['dealCards', 'addPlayers', 'addSinglePlayer', 'winningHand', 'resetGame']),
         async handleClickStart(){
              if(this.playersName.length > 3){
-                this.showAddPlayer = false
                 await this.addSinglePlayer(this.playersName)
+                this.showAddPlayer = false
                 this.dealCards()
             }
         },
         async handClickDealAgain(){
             await this.resetGame();
-            this.dealCards();
+            this.dealCards()
         },
         handleGetWinner(){
-            this.winningHand();
+            this.winningHand()
         },
         cardSuit(suit){
             switch(suit){
@@ -109,5 +111,4 @@ export default {
         }
     },
 }
-</script>  
- 
+</script>

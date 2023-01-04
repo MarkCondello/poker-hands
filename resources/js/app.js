@@ -1,5 +1,11 @@
 import Vue from 'vue';
-import store from "./store";
+import { createPinia, PiniaVuePlugin } from 'pinia'
+
+// import store from "./store";
+
+
+Vue.use(PiniaVuePlugin)
+const pinia = createPinia()
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -31,6 +37,6 @@ window.Vue = Vue;
  */
 
 const app = new Vue({
-    store,
-    el: '#app',
+  el: '#app',
+  pinia,
 });

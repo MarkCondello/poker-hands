@@ -12,6 +12,7 @@
     "devDependencies": {
         "bootstrap": "^4.0.0",
         "laravel-mix": "^6.0.49",
+        "pinia": "^2.0.28",
         "resolve-url-loader": "^5.0.0",
         "sass": "^1.57.1",
         "sass-loader": "^12.6.0",
