@@ -1,6 +1,6 @@
 <template>
     <div class="poker-hands">
-        <h1>POKER HANDS</h1>
+        <h1>5 card studd </h1>
         <fieldset v-if="showGameSettings">
             <div class="field">
                 <label for="playersName">
@@ -67,6 +67,11 @@ import PlayersCards from './PlayersCards.vue'
 export default {
     name: "Poker-Hands",
     components: { PlayersCards },
+    props: {
+        playerItems: {
+            type: Array,
+        }
+    },
     setup() {
         const pokerHands = usePokerHandsStore()
         const { players, playersName, showGameSettings, numberOfPlayers, message, invalidInput, } = storeToRefs(pokerHands)

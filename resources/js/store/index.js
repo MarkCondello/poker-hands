@@ -50,6 +50,7 @@ export const usePokerHandsStore = defineStore('pokerHands', {
                 id: Math.floor(Math.random() * 100000),
                 name: this.playersName,
                 hand:[],
+                showHand: true,
             }
             this.players.push(player)
         },

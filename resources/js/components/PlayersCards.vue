@@ -2,7 +2,10 @@
  <div class="container">
     <article v-for="(player, pid) in players" :key="pid">
       <h2>{{player.name}}</h2>
-      <ul class="hand">
+      <ul
+        class="hand"
+        :class="{'visible' :player.showHand}"
+      >
         <li
           v-for="(card, cid) in player.hand"
           :key="pid + cid"

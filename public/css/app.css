@@ -4,21 +4,35 @@
   height: 100vh;
 }
 .poker-hands .container {
-  padding: 25px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 50px;
+  padding: 25px;
 }
 .poker-hands .container .hand {
-  padding: 0;
   display: grid;
   padding: 0;
   grid-template-columns: repeat(5, 1fr);
 }
 .poker-hands .container .hand .card {
+  background-color: #fff;
+  background-clip: border-box;
+  display: flex;
+  flex-direction: column;
   height: 150px;
   padding: 0.5rem;
   position: relative;
+  min-width: 0;
+  word-wrap: break-word;
+}
+.poker-hands .container .hand .card::after {
+  content: "";
+  background-color: rgba(128, 128, 128, 0.6588235294);
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
 }
 .poker-hands .container .hand .card:nth-of-type(1) {
   left: 210%;
@@ -58,6 +72,9 @@
   bottom: 0.5rem;
   right: 0.5rem;
   transform: rotate(180deg);
+}
+.poker-hands .container .hand.visible .card::after {
+  display: none;
 }
 
 /*!

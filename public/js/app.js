@@ -17843,6 +17843,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   components: {
     PlayersCards: _PlayersCards_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
+  props: {
+    playerItems: {
+      type: Array
+    }
+  },
   setup: function setup() {
     var pokerHands = (0,_store_index__WEBPACK_IMPORTED_MODULE_0__.usePokerHandsStore)();
     var _storeToRefs = (0,pinia__WEBPACK_IMPORTED_MODULE_2__.storeToRefs)(pokerHands),
@@ -17994,7 +17999,7 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "poker-hands"
 };
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", null, "POKER HANDS", -1 /* HOISTED */);
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", null, "5 card studd ", -1 /* HOISTED */);
 var _hoisted_3 = {
   key: 0
 };
@@ -18097,26 +18102,27 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "container"
 };
-var _hoisted_2 = {
-  "class": "hand"
-};
+var _hoisted_2 = ["innerHTML"];
 var _hoisted_3 = ["innerHTML"];
-var _hoisted_4 = ["innerHTML"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.players, function (player, pid) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("article", {
       key: pid
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(player.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_2, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(player.hand, function (card, cid) {
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(player.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", {
+      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["hand", {
+        'visible': player.showHand
+      }])
+    }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(player.hand, function (card, cid) {
       return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", {
         key: pid + cid,
         "class": "card",
         style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)("color:".concat($options.cardColor(card[0])))
       }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(card.slice(1)), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         innerHTML: $options.cardSuit(card[0])
-      }, null, 8 /* PROPS */, _hoisted_3)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(card.slice(1)), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+      }, null, 8 /* PROPS */, _hoisted_2)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(card.slice(1)), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         innerHTML: $options.cardSuit(card[0])
-      }, null, 8 /* PROPS */, _hoisted_4)])], 4 /* STYLE */);
-    }), 128 /* KEYED_FRAGMENT */))])]);
+      }, null, 8 /* PROPS */, _hoisted_3)])], 4 /* STYLE */);
+    }), 128 /* KEYED_FRAGMENT */))], 2 /* CLASS */)]);
   }), 128 /* KEYED_FRAGMENT */))]);
 }
 
@@ -19044,7 +19050,8 @@ var usePokerHandsStore = (0,pinia__WEBPACK_IMPORTED_MODULE_2__.defineStore)('pok
       var player = {
         id: Math.floor(Math.random() * 100000),
         name: this.playersName,
-        hand: []
+        hand: [],
+        showHand: true
       };
       this.players.push(player);
     },
