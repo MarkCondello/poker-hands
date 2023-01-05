@@ -1,6 +1,6 @@
 <template>
     <div class="poker-hands">
-        <h1>5 card studd </h1>
+        <h1>5 card studd - Studds</h1>
         <fieldset v-if="showGameSettings">
             <div class="field">
                 <label for="playersName">
@@ -103,3 +103,5 @@ export default {
     },
 }
 </script>
+
+ 
