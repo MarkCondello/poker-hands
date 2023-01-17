@@ -67,11 +67,11 @@ import PlayersCards from './PlayersCards.vue'
 export default {
     name: "Poker-Hands",
     components: { PlayersCards },
-    props: {
-        playerItems: {
-            type: Array,
-        }
-    },
+    // props: { // not required
+    //     playerItems: {
+    //         type: Array,
+    //     }
+    // },
     setup() {
         const pokerHands = usePokerHandsStore()
         const { players, playersName, showGameSettings, numberOfPlayers, message, invalidInput, } = storeToRefs(pokerHands)
@@ -97,7 +97,7 @@ export default {
             }
         },
         async handClickDealAgain(){
-            await this.resetGame();
+            await this.resetGame()
             this.dealCards()
         },
     },
