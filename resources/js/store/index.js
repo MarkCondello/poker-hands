@@ -6,14 +6,14 @@ export const usePokerHandsStore = defineStore('pokerHands', {
     state: () => ({
         deck: [...deckOfCards],
         playersName: '',
-        showGameSettings: false,
+        showGameSettings: true,
         numberOfPlayers: 5,
         players: [
             // Bug with Full house FIXED NOW
-            {"id":123321,"name":"white","hand":["H4","C8","D4","C4","D8"]},
-            {"id":987789,"name":"black","hand":["D3","D6","DA","C7","HJ"]},
-            {"id":678876,"name":"red","hand":["HK","CK","C2","S2","DK"]},
-            {"id":3867,"name":"blue","hand":["DJ","S6","C5","CJ","D2"]},
+            // {"id":123321,"name":"white","hand":["H4","C8","D4","C4","D8"]},
+            // {"id":987789,"name":"black","hand":["D3","D6","D2","C7","HJ"]},
+            // {"id":678876,"name":"red","hand":["HK","CK","C2","S2","DK"]},
+            // {"id":3867,"name":"blue","hand":["SA","S5","C5","CA","DA"]},
         ],
         message: null,
         invalidInput: {

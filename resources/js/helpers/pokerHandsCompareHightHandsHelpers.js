@@ -2,21 +2,10 @@ import {helpers} from './pokerHandHelpers.js';
 
 export default class compareHighHandsHelpers {
     compareFullHouseCards(){
-        let threeOfAKindHands = [...this.playersHighHands].sort((playerA, playerB) => playerB.handValue.highCard.trips.value - playerA.handValue.highCard.trips.value ); //check if there is 2 hands with the same high three of a kind 
-        if(threeOfAKindHands[0].handValue.highCard.trips.value === threeOfAKindHands[1].handValue.highCard.trips.value) {
-            //I dont think that the pair check is needed as there can only be 1 three of a kind of any value which mean that the high trips in a book always wins; no need to check pair values
-            let twoOfAKindHands = [...this.playersHighHands].sort((playerA, playerB) => playerB.handValue.highCard.pair.value - playerA.handValue.highCard.pair.valuex);
-            if(twoOfAKindHands[0].handValue.highCard.pair.value === twoOfAKindHands[1].handValue.highCard.pair.value) {
-                let highPairs = [...twoOfAKindHands].filter(hand => hand.handValue.highCard.pair.value === twoOfAKindHands[0].handValue.highCard.pair.value);
-                this.splitPotHands = highPairs;
-            } else {
-                this.highestHand = twoOfAKindHands[0]; //high pair
-                this.highestHand.arrayIndex = this.getWinningHandIndex();
-            }
-        } else {
-            this.highestHand = threeOfAKindHands[0];
-            this.highestHand.arrayIndex = this.getWinningHandIndex();
-        }
+        const threeOfAKindHands = [...this.playersHighHands].sort((playerA, playerB) => playerB.handValue.highCard.trips.value - playerA.handValue.highCard.trips.value).reverse()
+        console.log('reached threeOfAKindHands', {threeOfAKindHands})
+        this.highestHand = threeOfAKindHands[0]
+        this.highestHand.arrayIndex = this.getWinningHandIndex()
     }
     compareTwoPairHighCards() {
         let playersHighPairValuesSorted = [...this.playersHighHands].sort((playerA, playerB) => playerB.handValue.highCard[0].value - playerA.handValue.highCard[0].value);
