@@ -12,7 +12,7 @@ describe('App', () => {
     // creates a fresh pinia and make it active so it's automatically picked up by any useStore() call without having to pass it to it: `useStore(pinia)`
     setActivePinia(createPinia())
     wrapper = mount(App, {
-      // props: { title: 'CFS Edge fee calculator...' }
+      // attrs for the component like props can be added here
     })
     pokerHandsStore = usePokerHandsStore()
     pokerHandsStore.players = [
@@ -27,14 +27,47 @@ describe('App', () => {
     expect(pokerHandsStore.players.length).toEqual(4)
   })
 
+  // Royal flush checks start
+  it('Royal Flush hand is set to winner.', async () => {
+    pokerHandsStore.players = [
+      {"id":123321,"name":"white","hand":["H4","C8","D4","C4","D8"]},
+      {"id":987789,"name":"black","hand":["D3","D6","D2","C7","HJ"]},
+      {"id":678876,"name":"red","hand":["HK","C5","C2","S2","DK"]},
+      {"id":3867,"name":"blue","hand":["C10","CJ","CQ","CK","CA"]},
+    ]
+    await pokerHandsStore.winningHand()
+    expect(pokerHandsStore.players[3]).toHaveProperty('winner', true)
+  })
+  it('Royal Flush hand beats straight flush hand.', async () => {
+    pokerHandsStore.players = [
+      {"id":123321,"name":"white","hand":["H4","C8","D4","C4","D8"]},
+      {"id":987789,"name":"black","hand":["D3","D6","D2","C7","HJ"]},
+      {"id":678876,"name":"red","hand":["D9","D10","DJ","DQ","DK"]},
+      {"id":3867,"name":"blue","hand":["C10","CJ","CQ","CK","CA"]},
+    ]
+    await pokerHandsStore.winningHand()
+    expect(pokerHandsStore.players[3]).toHaveProperty('winner', true)
+  })
+  // Royal flush checks start
+
+  //Straight flush checks start
+  it('Straight flush hand is set to winner.', async () => {
+    pokerHandsStore.players = [
+      {"id":123321,"name":"white","hand":["H4","C8","D4","C4","D8"]},
+      {"id":987789,"name":"black","hand":["D3","D6","D2","C7","HJ"]},
+      {"id":678876,"name":"red","hand":["D9","D10","DJ","DQ","DK"]},
+      {"id":3867,"name":"blue","hand":["S10","CJ","CQ","CK","CA"]}, // straight
+    ]
+    await pokerHandsStore.winningHand()
+    expect(pokerHandsStore.players[2]).toHaveProperty('winner', true)
+  })
+  //Straight flush checks end
+
+  // Full house checks start
   it('Full house hand is set to winner.', async () => {
     await pokerHandsStore.winningHand()
-    // console.log(pokerHandsStore.players[0])
     expect(pokerHandsStore.players[0]).toHaveProperty('winner', true)
   })
-
-  // This is not passing
-  
   it('Higher Full house hand is set to winner.', async () => {
     pokerHandsStore.players = [
       // Bug with Full house FIXED NOW
@@ -44,9 +77,10 @@ describe('App', () => {
       {"id":3867,"name":"blue","hand":["SA","S5","C5","CA","DA"]},
     ]
     await pokerHandsStore.winningHand()
-    console.log(pokerHandsStore.players[2])
     expect(pokerHandsStore.players[3]).toHaveProperty('winner', true)
   })
+  // Full house checks start
+
 
   // it('... component renders properly.', () => {
   //   expect(wrapper.text()).toContain('CFS Edge fee calculator...')
