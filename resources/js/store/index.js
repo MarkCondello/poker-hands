@@ -6,14 +6,13 @@ export const usePokerHandsStore = defineStore('pokerHands', {
     state: () => ({
         deck: [...deckOfCards],
         playersName: '',
-        showGameSettings: true,
+        showGameSettings: false,
         numberOfPlayers: 5,
         players: [
-            // Bug with Full house FIXED NOW
-            // {"id":123321,"name":"white","hand":["H4","C8","D4","C4","D8"]},
-            // {"id":987789,"name":"black","hand":["D3","D6","D2","C7","HJ"]},
-            // {"id":678876,"name":"red","hand":["HK","CK","C2","S2","DK"]},
-            // {"id":3867,"name":"blue","hand":["SA","S5","C5","CA","DA"]},
+            {"id":123321,"name":"white","hand":["H2","C8","D4","C4","D8"]},
+            {"id":987789,"name":"black","hand":["D3","D6","D2","C7","HJ"]},
+            {"id":678876,"name":"red","hand":["D10","DJ","DQ","DK", "SA"]},
+            {"id":3867,"name":"blue","hand":["S10","CJ","CQ","CK","CA"]}, // straight
         ],
         message: null,
         invalidInput: {
@@ -75,7 +74,6 @@ export const usePokerHandsStore = defineStore('pokerHands', {
             // console.log({matchingHighHands})
             if (matchingHighHands.length > 1 ) {
                 const gameResult = new compareHighHands(matchingHighHands);
-                  console.log("matchingHighHands.length > 1, Matching high hands check", {gameResult})
                 if (gameResult.splitPotHands.length) {
                     const message = this.splitPotMessage(gameResult.splitPotHands),
                     playerIds = gameResult.splitPotHands.map(hand => hand.id)
@@ -156,7 +154,7 @@ export const usePokerHandsStore = defineStore('pokerHands', {
                     }
                     break
                 default:
-                    console.log("default message, card:", hand.handValue.highCard.card, hand.handValue.highCard)
+                    // console.log("default message, card:", hand.handValue.highCard.card, hand.handValue.highCard)
                     switch(hand.handValue.highCard.value){ // this could be a text formatting helper partial
                         case 14:
                             message = 'Ace high'

@@ -3,7 +3,6 @@ import {helpers} from './pokerHandHelpers.js';
 export default class compareHighHandsHelpers {
     compareFullHouseCards(){
         const threeOfAKindHands = [...this.playersHighHands].sort((playerA, playerB) => playerB.handValue.highCard.trips.value - playerA.handValue.highCard.trips.value).reverse()
-        console.log('reached threeOfAKindHands', {threeOfAKindHands})
         this.highestHand = threeOfAKindHands[0]
         this.highestHand.arrayIndex = this.getWinningHandIndex()
     }
