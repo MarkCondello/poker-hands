@@ -37,5 +37,9 @@ describe('App', () => {
     await pokerHandsStore.winningHand()
     expect(pokerHandsStore.players[3]).toHaveProperty('winner', true)
   })
+
+
+  // Full house beats a flush --
+  
   // Full house checks end
 })
