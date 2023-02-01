@@ -15,41 +15,28 @@ describe('App', () => {
     })
     pokerHandsStore = usePokerHandsStore()
     pokerHandsStore.players = [
-      {"id":123321,"name":"white","hand":["H4","C8","D4","CA","D8"]},
+      {"id":123321,"name":"white","hand":["H4","C2","D4","C4","D8"]},
       {"id":987789,"name":"black","hand":["D3","D6","D2","C7","HJ"]},
-      {"id":678876,"name":"red","hand":["HQ","C5","C2","S2","DK"]},
-      {"id":3867,"name":"blue","hand":["C10","CJ","CQ","CK","C1"]},
+      {"id":678876,"name":"red","hand":["D9","D10","DJ","DQ","HK"]},
+      {"id":3867,"name":"blue","hand":["S10","CJ","CQ","CK","CA"]},
     ]
   })
 
-  // Flush checks start
-  it('Flush hand is set to winner.', async () => {
+  it('Higher value straight hand is set to winner.', async () => {
     await pokerHandsStore.winningHand()
     expect(pokerHandsStore.players[3]).toHaveProperty('winner', true)
   })
 
-  it('Flush hand beats straight hand.', async () => {
+  it('Multiple straight hands result in split pot.', async () => {
     pokerHandsStore.players = [
-      {"id":123321,"name":"white","hand":["HA","C8","D4","C4","D8"]},
+      {"id":123321,"name":"white","hand":["H4","C2","D4","C4","D8"]},
       {"id":987789,"name":"black","hand":["D3","D6","D2","C7","HJ"]},
-      {"id":678876,"name":"red","hand":["D9","D10","DJ","DQ","SK"]},
-      {"id":3867,"name":"blue","hand":["C10","CJ","CQ","CK","C2"]},
-    ]
-    await pokerHandsStore.winningHand()
-    // console.log(pokerHandsStore.players)
-    expect(pokerHandsStore.players[3]).toHaveProperty('winner', true)
-  })
-
-  it('Flush high hands result in split pot.', async () => {
-    pokerHandsStore.players = [
-      {"id":123321,"name":"white","hand":["H2","C8","D4","C4","D8"]},
-      {"id":987789,"name":"black","hand":["D3","D6","D2","C7","HJ"]},
-      {"id":678876,"name":"red","hand":["D10","DJ","DQ","DK", "D2"]},
-      {"id":3867,"name":"blue","hand":["C10","CJ","CQ","CK","C2"]}
+      {"id":678876,"name":"red","hand":["DA","D10","DJ","DQ","HK"]},
+      {"id":3867,"name":"blue","hand":["S10","CJ","CQ","CK","CA"]},
     ]
     await pokerHandsStore.winningHand()
     expect(pokerHandsStore.players[2]).toHaveProperty('splitPotWinner', true)
     expect(pokerHandsStore.players[3]).toHaveProperty('splitPotWinner', true)
   })
-  // Flush checks end
+  
 })
