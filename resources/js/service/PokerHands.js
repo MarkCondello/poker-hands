@@ -44,11 +44,11 @@ export class compareHighHands extends compareHighHandsHelpers{
                this.compareHighCards(this.playersHighHands);
             break;
          case "two pairs":
-            console.log("reached two pair compare")
+            // console.log("reached two pair compare")
              this.compareTwoPairHighCards(this.playersHighHands);
             break;
          case "pair":
-            console.log("reached single pair compare")
+            // console.log("reached single pair compare")
                this.comparePairHighCards(this.playersHighHands);
                break;
          case "high card":

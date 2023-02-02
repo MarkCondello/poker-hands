@@ -206,7 +206,8 @@ export const usePokerHandsStore = defineStore('pokerHands', {
             }
             names = names.slice(0, names.length);
             if (firstHighCard.handValue.type === "two pairs") {
-                highCardMessage = `${firstHighCard.handValue.highCard[0].card.splice(1)}`
+                // console.log({firstHighCardHandValueCardDotCard : firstHighCard.handValue.highCard[0].card})
+                highCardMessage = `${firstHighCard.handValue.highCard[0].card}`
             }
             if (firstHighCard.handValue.type === "Full House") {
                 highCardMessage = `${firstHighCard.handValue.highCard.trips.highCard.card.splice(1)}`

@@ -50,8 +50,7 @@ export default class compareHighHandsHelpers {
     }
     // This is creating a bug
     comparePairHighCards(){
-
-        console.log([...this.playersHighHands])
+        // console.log([...this.playersHighHands])
         let playersHighCardValuesSorted = [...this.playersHighHands].sort((playerA, playerB) => playerB.handValue.highCard.value - playerA.handValue.highCard.value);
         
         // console.log({playersHighCardValuesSorted})
