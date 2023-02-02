@@ -1,5 +1,8 @@
  - [X] Convert Vuex to Pinia
  - [X] Add options to add up to 5 opponents
- - [ ] Add Jest tests to check for winning hand score accuracy
+ - [X] Add Jest tests to check for winning hand score accuracy
+
  - [ ] Include betting features for poker hands using [5 card stud rules](https://www.youtube.com/watch?v=4Wpu1l09YZw&t=132s)
   - [ ] user to select starting balance (up to 500,000) and the blinds value
+
+  - [] Improve the UI with inspiration from [Dribble](https://dribbble.com/search/poker-game)
